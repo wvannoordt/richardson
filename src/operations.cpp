@@ -2,6 +2,7 @@
 #include <iostream>
 #include "typedef.h"
 #include <string>
+#include <unistd.h>
 namespace richardson::operations
 {
     unsigned long long num_ops_total;
@@ -34,32 +35,36 @@ namespace richardson::operations
             case R_ADD_OP:
             {
                 op_string + "+";
-#if(EXPENSE_LEVEL>1)
+#if(EXPENSE_LEVEL>0)
                 result = a+b;
+                num_ops_total ++;
 #endif
                 break;
             }
             case R_SUB_OP:
             {
                 op_string = "-";
-#if(EXPENSE_LEVEL>1)
+#if(EXPENSE_LEVEL>0)
                 result = a-b;
+                num_ops_total ++;
 #endif
                 break;
             }
             case R_MUL_OP:
             {
                 op_string = "*";
-#if(EXPENSE_LEVEL>1)
+#if(EXPENSE_LEVEL>0)
                 result = a*b;
+                num_ops_total ++;
 #endif
                 break;
             }
             case R_DIV_OP:
             {
                 op_string = "/";
-#if(EXPENSE_LEVEL>1)
+#if(EXPENSE_LEVEL>0)
                 result = a/b;
+                num_ops_total ++;
 #endif
                 break;
             }
@@ -67,19 +72,41 @@ namespace richardson::operations
 #if(EXPENSE_LEVEL>1)
         return result;
 #elif(EXPENSE_LEVEL>0)
-        return sim_special_get(a, b, op_string);
+        return sim_special_get(a, b, op_string, result);
 #else
         return special_get(a, b, op_string);
 #endif
     }
 
-    _real sim_special_get(_real a, _real b, std::string op)
+    _real sim_special_get(_real a, _real b, std::string op, _real result)
     {
-        return 0.0;
+        std::cout << "Please compute the following: ";
+        std::cout << a << " " << op << " " << b;
+        std::cout << " = ";
+        std::string str = std::to_string(result);
+        int len = str.length();
+        double r = 0;
+        for (int i = 0; i < len; i++)
+        {
+            r = ((double) rand() / (RAND_MAX));
+            std::cout << str[i] << std::flush;
+            usleep((int)(9000 + r*6000));
+        }
+        std::cout << std::endl;
     }
 
     _real special_get(_real a, _real b, std::string op)
     {
-        return 0.0;
+        std::cout << "Please compute the following: ";
+        std::cout << a << " " << op << " " << b;
+        std::cout << " = ";
+        double n;
+        while(!(std::cin >> n ))
+        {
+            std::string str;
+            std::cin.clear();
+            getline(std::cin, str);
+            std::cout << str << " is not a number!\n";
+        }
     }
 }

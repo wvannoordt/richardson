@@ -6,5 +6,6 @@ namespace richardson
     extern "C"
     {
         void init(void);
+        void example(void);
     }
 }

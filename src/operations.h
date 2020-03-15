@@ -11,5 +11,5 @@ namespace richardson::operations
     _real R_div(_real a, _real b);
     _real R_op_gen(_real a, _real b, const int op_code);
     _real special_get(_real a, _real b, std::string op);
-    _real sim_special_get(_real a, _real b, std::string op);
+    _real sim_special_get(_real a, _real b, std::string op, _real result);
 }

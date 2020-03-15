@@ -4,5 +4,6 @@
 int main()
 {
 	richardson::init();
+	richardson::example();
 	return 0;
 }
